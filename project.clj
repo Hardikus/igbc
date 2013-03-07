@@ -6,5 +6,4 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [fs "1.3.2"]           ;For Filesystem related functions.
                  [conch "0.2.1"]        ;For running shell commands.
-;                 [incanter/incanter-excel "1.4.1"]
                  [clj-webdriver "0.6.0-beta3"]])
