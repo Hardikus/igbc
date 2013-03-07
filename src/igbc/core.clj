@@ -41,9 +41,11 @@
                                 (taxi/text catg)   #"»"))))
 
 (defn extract-str
-  "Returns the string after removing given regex"
+  "Returns the string after removing given regex as well as comma."
   [elem regex]
-  (clojure.string/replace (taxi/text elem) regex ""))
+  (let [temp1 (clojure.string/replace (taxi/text elem) regex "")
+        temp2 (clojure.string/replace temp1 #"," "")]
+    temp2))
 
 (defn is-categ?
   "Checks if given element is a category?"
@@ -88,15 +90,15 @@
 (defn write-one-line
   "Writes each company data and given email address on one newline."
   [m email]
-  (spit file-op (str (get m :category "") " -::- ") :append true)
-  (spit file-op (str (get m :company-name "") " -::- ") :append true)
-  (spit file-op (str (get m :address "") " -::- ") :append true)
-  (spit file-op (str (get m :telephone "") " -::- ") :append true)
-  (spit file-op (str (get m :hand-phone "") " -::- ") :append true)
-  (spit file-op (str (get m :fax "") " -::- ") :append true)
-  (spit file-op (str (get m :website "") " -::- ") :append true)
-  (spit file-op (str email " -::- ") :append true)
-  (spit file-op (str (get m :contact "") " -::- ") :append true)
+  (spit file-op (str (get m :category "") ",") :append true)
+  (spit file-op (str (get m :company-name "") ",") :append true)
+  (spit file-op (str (get m :address "") ",") :append true)
+  (spit file-op (str (get m :telephone "") ",") :append true)
+  (spit file-op (str (get m :hand-phone "") ",") :append true)
+  (spit file-op (str (get m :fax "") ",") :append true)
+  (spit file-op (str (get m :website "") ",") :append true)
+  (spit file-op (str email ",") :append true)
+  (spit file-op (str (get m :contact "") "") :append true)
   (spit file-op "\n" :append true))
 
 (defn doseq-over-emails
@@ -123,4 +125,4 @@
   []
   (init-firefox-local-driver 3000)
   (taxi/to "http://www.igbc.in/site/igbcdir/compind.jsp#mydiv4")
-  (write-data))
+  #_(write-data))
